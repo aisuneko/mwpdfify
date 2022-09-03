@@ -13,7 +13,7 @@ There are two PDF rendering backends to choose from: `pdfkit` (default) or `weas
 2. (optional) If you want only a specific category, get its title (in the form of `Category:XXX`)
 3. Run the script. eg.:
    - `mwpdfify https://lycoris-recoil.fandom.com/api.php` - Download all pages (as in Special:AllPages) from [Lycoris Recoil Fandom Wiki](https://lycoris-recoil.fandom.com/) as PDF
-   - `mwpdfify https://wiki.archlinux.org/api.php -c Category:Installation_process` - Download all pages under Category:Installation_process from ArchWiki as PDF
+   - `mwpdfify https://wiki.archlinux.org/api.php -c Category:Installation_process` - Download all pages under Category:Installation_process from [ArchWiki](https://wiki.archlinux.org/) as PDF
 
 The downloaded PDFs should be avaliable in a folder marked with the site's domain name in the current directory. 
 
