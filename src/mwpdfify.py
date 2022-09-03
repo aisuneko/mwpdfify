@@ -15,10 +15,7 @@ except ImportError:
 
 def init_dir(name):
     dir_path = os.path.join(os.getcwd(), name)
-    try:
-        os.mkdir(dir_path)
-    except FileExistsError:
-        pass
+    os.makedirs(name, exist_ok=True)
     os.chdir(dir_path)
 
 def site_url(url, is_short):
@@ -53,10 +50,10 @@ def download(api, backend, threads=8, limit=None, title=None, noprintable=False)
         futures = {}
         cnt = 0
         print(f"Using backend '{backend}'")
-        notifier = f"Retrieving pages info of {site_url(api, True)}..."
+        notifier = f"Retrieving pages info of {site_url(api, True)}"
         if is_category:
-            notifier = f"Retrieving pages info of {site_url(api, True)} ({title})..."
-        print(notifier)
+            notifier = notifier + f" ({title})"
+        print(notifier + "...")
         while True:
             data = get_pages(api, limit, is_category, title, resume_pos)
             if is_category:
