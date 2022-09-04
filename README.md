@@ -3,7 +3,9 @@ Batch download pages from MediaWiki sites (All pages or pages of a category) as 
 
 ## Install / Run
 `pip install mwpdfify`
-...or clone repo and `pip install .` 
+
+...or clone repo and `pip install .`
+
 ...or directly download and run `src/mwpdfify.py`
 
 There are two PDF rendering backends to choose from: `pdfkit` (default) or `weasyprint`. Use `pip install -r requirements.txt` to install both or choose one yourself. If using the former remember to also install `wkhtmltopdf` on your system.
@@ -40,9 +42,14 @@ options:
 ```
 ## Known issues
 - `&printable=yes` is deprecated in recent versions of MediaWiki (while no substitute API solutions are provided) so there might be layout issues when used with certain wikis; *especially* Fandom wikis as they also contain ads. 
+- Recursively download pages from subcategories of a category is currently not supported. 
 
 ## Changelog
-- v1.0 (2022/09/03): Initial release
+- v1.1 (2022/09/04):
+  - Changed address handling logic
+  - Bug fixes
+- v1.0 (2022/09/03): 
+  - Initial release
 
 ## License
 LGPLv3
