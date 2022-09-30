@@ -1,5 +1,5 @@
 # mwpdfify
-Batch download pages from MediaWiki sites (All pages or pages of a category) as printable PDFs. 
+Batch download multiple pages from MediaWiki sites (All pages or pages of a category) to printable PDFs. 
 
 ## Install / Run
 `pip install mwpdfify`
@@ -8,7 +8,7 @@ Batch download pages from MediaWiki sites (All pages or pages of a category) as 
 
 ...or directly download and run `src/mwpdfify.py`
 
-There are two PDF rendering backends to choose from: `pdfkit` (default) or `weasyprint`. Use `pip install -r requirements.txt` to install both or choose one yourself. If using the former remember to also install `wkhtmltopdf` on your system.
+There are two PDF rendering backends to choose from: `pdfkit` (installed as a dependency by default) or `weasyprint`. Use `pip install -r requirements.txt` to install both or choose one yourself. **If using the former remember to also install `wkhtmltopdf` on your system.**
 
 ## Usage
 1. Get the address of the **root** of your wiki, where its `api.php` and `index.php` resides. Typically it's identical to the site's root (`/`). For Wikipedia it's at `/w/`; tell me if there are other exceptions ;)
@@ -22,7 +22,7 @@ The downloaded PDFs should be avaliable in a folder marked with the site's domai
 
 See below for other parameters:
 ```
-usage: mwpdfify [-h] [-c CATEGORY] [-p] [-t THREADS] [-l LIMIT] [-b BACKEND] url
+usage: mwpdfify [-h] [-c CATEGORY] [-p] [-t THREADS] [-l LIMIT] [-w] url
 
 positional arguments:
   url                   site root of destination site
@@ -37,14 +37,15 @@ options:
   -l LIMIT, --limit LIMIT
                         Limit of JSON info returned at once, defaults to maximum
                         (0)
-  -b BACKEND, --backend BACKEND
-                        PDF rendering backend to use, defaults to 'pdfkit'
+  -w, --use-weasyprint  Use weasyprint as PDF rendering backend
 ```
 ## Known issues
 - `&printable=yes` is deprecated in recent versions of MediaWiki (while no substitute API solutions are provided) so there might be layout issues when used with certain wikis; *especially* Fandom wikis as they also contain ads. 
 - Recursively download pages from subcategories of a category is currently not supported. 
 
 ## Changelog
+- v1.1.2 (2022/09/30):
+  - Set `pdfkit` as required dependency
 - v1.1 (2022/09/04):
   - Changed address handling logic
   - Bug fixes

@@ -102,14 +102,14 @@ def output(futures, cnt):
     print(f"Done. {curpos-1} pages processed, {errcnt} errors")
 
 def main():
-    parser = argparse.ArgumentParser(description="Batch download printable PDF from MediaWiki sites")
+    parser = argparse.ArgumentParser(description="Utility for batch downloading (certain) pages from MediaWiki sites as printable PDFs")
     parser.add_argument('url', help='site root of destination site')
     parser.add_argument('-c', '--category', help='Download only a specified category', type=str)
 #    parser.add_argument('-r', '--recursive', help='Download through subcategories recursively, only to be used with -c', action='store_true')
     parser.add_argument('-p', '--no-printable', help='Force normal instead of printable version of pages', action='store_true')
     parser.add_argument('-t', '--threads', help='Number of download threads, defaults to %(default)s', type=int, default=8)
     parser.add_argument('-l', '--limit', help='Limit of JSON info returned at once, defaults to maximum (%(default)s)', type=int, default=0)
-    parser.add_argument('-b', '--backend', help='PDF rendering backend to use, defaults to \'%(default)s\'', type=str, default="pdfkit")
+    parser.add_argument('-w', '--use-weasyprint', help='Use weasyprint as PDF rendering backend', action='store_true')
 
     args = parser.parse_args()
     folder_name = site_url(args.url, True)
@@ -118,8 +118,8 @@ def main():
     args.recursive = None
 #    if args.recursive and not args.category:
 #        print("ERROR: -r/--recursive option is meant to only be used with -c/--category")
-#        exit(1)   
-    if (args.backend == "pdfkit" and not pdfkit) or (args.backend == "weasyprint" and not weasyprint):
+#        exit(1)
+    if ((not args.use_weasyprint) and not pdfkit) or (args.use_weasyprint and not weasyprint):
         print(f"ERROR: Backend '{args.backend}' unavailable; please install it first or switch to another")
         exit(1)
     if urllib.request.urlopen(root_address).code != 200:
@@ -128,6 +128,6 @@ def main():
     if args.category:
         folder_name = folder_name + f" ({re.sub(r':', '=', args.category)})"
     init_dir(folder_name)
-    download(root_address, args.backend, args.threads, args.limit, args.category, args.no_printable, args.recursive)
+    download(root_address, ('weasyprint' if args.use_weasyprint else 'pdfkit'), args.threads, args.limit, args.category, args.no_printable, args.recursive)
 if __name__ == '__main__':
     main()
